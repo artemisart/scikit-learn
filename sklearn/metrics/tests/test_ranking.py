@@ -903,10 +903,10 @@ def test_precision_recall_curve(drop):
     _test_precision_recall_curve(y_true, y_score, drop)
 
     # Make sure the first point of the Precision-Recall on the right is:
-    # (p=1.0, r=class balance) on a non-balanced dataset [1:]
-    p, r, t = precision_recall_curve(y_true[1:], y_score[1:], drop_intermediate=drop)
+    # (p=class balance, r=1.0) on a non-balanced dataset
+    p, r, t = precision_recall_curve(y_true, y_score, drop_intermediate=drop)
     assert r[0] == 1.0
-    assert p[0] == y_true[1:].mean()
+    assert p[0] == y_true.mean()
 
     # Use {-1, 1} for labels; make sure original labels aren't modified
     y_true[np.where(y_true == 0)] = -1
